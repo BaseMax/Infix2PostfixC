@@ -64,8 +64,22 @@ int precedence(char c) {
     return -1;
 }
 
+char* StringReverse(char *str) {
+    int len = strlen(str);
+    char *rev = (char*)malloc(sizeof(char) * len);
+    int i = 0;
+    int j = len - 1;
+
+    while (j >= 0) {
+        rev[i++] = str[j--];
+    }
+
+    return rev;
+}
+
 char* infixToPostfix(char *infix) {
     int i, j;
+    infix = StringReverse(infix);
     int len = strlen(infix);
     char *prefix = (char*)malloc(sizeof(char) * (len + 1));
     Stack *s = initStack(len);
@@ -113,7 +127,7 @@ int main(int argc, char** argv)
     printf("Infix:  %s\n", infix);
     printf("Postfix: %s\n", postfix);
 
-    if (strcmp(prefix, "76*5+") == 0) printf("TEST PASS\n");
+    if (strcmp(postfix, "76*5+") == 0) printf("TEST PASS\n");
     else printf("TEST FAIL\n");
 
     return 0;
