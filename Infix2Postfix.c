@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 typedef struct {
     char *data;
@@ -17,8 +18,16 @@ Stack* initStack(int size) {
     return s;
 }
 
+bool isEmpty(Stack *s) {
+    return s->top == -1;
+}
+
+bool isFull(Stack *s) {
+    return s->top == s->size - 1;
+}
+
 void push(Stack *s, char c) {
-    if (s->top == s->size - 1) {
+    if (isFull(s)) {
         printf("Stack is full!\n");
         return;
     }
@@ -27,18 +36,18 @@ void push(Stack *s, char c) {
 }
 
 char pop(Stack *s) {
-    if (s->top == -1) {
+    if (isEmpty(s)) {
         printf("Stack is empty!\n");
-        return -1;
+        return '\0';
     }
 
     return s->data[s->top--];
 }
 
 char peek(Stack *s) {
-    if (s->top == -1) {
+    if (isEmpty(s)) {
         printf("Stack is empty!\n");
-        return -1;
+        return '\0';
     }
 
     return s->data[s->top];
@@ -78,13 +87,12 @@ char* StringReverse(char *str) {
 }
 
 char* infixToPostfix(char *infix) {
-    int i, j;
     infix = StringReverse(infix);
     int len = strlen(infix);
     char *postfix = (char*)malloc(sizeof(char) * (len + 1));
     Stack *s = initStack(len);
 
-    for (i = 0, j = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         if (infix[i] == '(') {
             infix[i] = ')';
         } else if (infix[i] == ')') {
@@ -92,18 +100,20 @@ char* infixToPostfix(char *infix) {
         }
     }
 
-    for (i = 0; i < len; i++) {
+    int j = 0;
+
+    for (int i = 0; i < len; i++) {
         if (infix[i] == '(') {
             push(s, infix[i]);
         } else if (isalpha(infix[i]) || isdigit(infix[i])) {
             postfix[j++] = infix[i];
         } else if (isOperator(infix[i])) {
-            while (s->top != -1 && peek(s) != '(' && precedence(infix[i]) <= precedence(peek(s))) {
+            while (!isEmpty(s) && precedence(infix[i]) <= precedence(peek(s))) {
                 postfix[j++] = pop(s);
             }
             push(s, infix[i]);
         } else if (infix[i] == ')') {
-            while (s->top != -1 && peek(s) != '(') {
+            while (!isEmpty(s) && peek(s) != '(') {
                 postfix[j++] = pop(s);
             }
             pop(s);
