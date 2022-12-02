@@ -93,6 +93,9 @@ char* StringReverse(char *str)
         rev[i++] = str[j--];
     }
 
+
+    rev[i] = '\0';
+
     return rev;
 }
 
