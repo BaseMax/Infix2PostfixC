@@ -81,7 +81,7 @@ char* infixToPostfix(char *infix) {
     int i, j;
     infix = StringReverse(infix);
     int len = strlen(infix);
-    char *prefix = (char*)malloc(sizeof(char) * (len + 1));
+    char *postfix = (char*)malloc(sizeof(char) * (len + 1));
     Stack *s = initStack(len);
 
     for (i = 0, j = 0; i < len; i++) {
@@ -96,27 +96,27 @@ char* infixToPostfix(char *infix) {
         if (infix[i] == '(') {
             push(s, infix[i]);
         } else if (isalpha(infix[i]) || isdigit(infix[i])) {
-            prefix[j++] = infix[i];
+            postfix[j++] = infix[i];
         } else if (isOperator(infix[i])) {
             while (s->top != -1 && peek(s) != '(' && precedence(infix[i]) <= precedence(peek(s))) {
-                prefix[j++] = pop(s);
+                postfix[j++] = pop(s);
             }
             push(s, infix[i]);
         } else if (infix[i] == ')') {
             while (s->top != -1 && peek(s) != '(') {
-                prefix[j++] = pop(s);
+                postfix[j++] = pop(s);
             }
             pop(s);
         }
     }
 
     while (s->top != -1) {
-        prefix[j++] = pop(s);
+        postfix[j++] = pop(s);
     }
 
-    prefix[j] = '\0';
+    postfix[j] = '\0';
 
-    return prefix;
+    return postfix;
 }
 
 int main(int argc, char** argv)
