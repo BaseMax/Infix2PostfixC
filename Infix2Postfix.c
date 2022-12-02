@@ -134,8 +134,10 @@ int main(int argc, char** argv)
 
     char* new_infix = malloc(sizeof(char) * 100);
     printf("Enter an infix expression: ");
-    scanf("%s", &new_infix);
-    char* new_postfix = infixToPostfix(infix);
+    scanf("%s", new_infix);
+
+    printf("The infix expression is: %s\n", new_infix);
+    char* new_postfix = infixToPostfix(new_infix);
     printf("The postfix expression is: %s\n", new_postfix);
 
     return 0;

@@ -12,7 +12,7 @@ This is a simple program that converts infix expressions to postfix expressions.
 
 ```
 Enter an infix expression: (2+4)*6
-The postfix expression is: 24+6*
+The postfix expression is: 642+*
 ```
 
 ## License
