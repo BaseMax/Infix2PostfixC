@@ -130,5 +130,13 @@ int main(int argc, char** argv)
     if (strcmp(postfix, "76*5+") == 0) printf("TEST PASS\n");
     else printf("TEST FAIL\n");
 
+    printf("=======================\n");
+
+    char* new_infix = malloc(sizeof(char) * 100);
+    printf("Enter an infix expression: ");
+    scanf("%s", &new_infix);
+    char* new_postfix = infixToPostfix(infix);
+    printf("The postfix expression is: %s\n", new_postfix);
+
     return 0;
 }
