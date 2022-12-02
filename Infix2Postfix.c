@@ -4,13 +4,15 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-typedef struct {
+typedef struct
+{
     char *data;
     int top;
     int size;
 } Stack;
 
-Stack* initStack(int size) {
+Stack* initStack(int size)
+{
     Stack *s = (Stack*)malloc(sizeof(Stack));
     s->data = (char*)malloc(sizeof(char) * size);
     s->top = -1;
@@ -18,15 +20,18 @@ Stack* initStack(int size) {
     return s;
 }
 
-bool isEmpty(Stack *s) {
+bool isEmpty(Stack *s)
+{
     return s->top == -1;
 }
 
-bool isFull(Stack *s) {
+bool isFull(Stack *s)
+{
     return s->top == s->size - 1;
 }
 
-void push(Stack *s, char c) {
+void push(Stack *s, char c)
+{
     if (isFull(s)) {
         printf("Stack is full!\n");
         return;
@@ -35,7 +40,8 @@ void push(Stack *s, char c) {
     s->data[++s->top] = c;
 }
 
-char pop(Stack *s) {
+char pop(Stack *s)
+{
     if (isEmpty(s)) {
         printf("Stack is empty!\n");
         return '\0';
@@ -44,7 +50,8 @@ char pop(Stack *s) {
     return s->data[s->top--];
 }
 
-char peek(Stack *s) {
+char peek(Stack *s)
+{
     if (isEmpty(s)) {
         printf("Stack is empty!\n");
         return '\0';
@@ -53,7 +60,8 @@ char peek(Stack *s) {
     return s->data[s->top];
 }
 
-int isOperator(char c) {
+int isOperator(char c)
+{
     if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
         return 1;
     }
@@ -61,7 +69,8 @@ int isOperator(char c) {
     return 0;
 }
 
-int precedence(char c) {
+int precedence(char c)
+{
     if (c == '+' || c == '-') {
         return 1;
     } else if (c == '*' || c == '/') {
@@ -73,9 +82,10 @@ int precedence(char c) {
     return -1;
 }
 
-char* StringReverse(char *str) {
+char* StringReverse(char *str)
+{
     int len = strlen(str);
-    char *rev = (char*)malloc(sizeof(char) * len);
+    char *rev = (char*) malloc(sizeof(char) * len);
     int i = 0;
     int j = len - 1;
 
@@ -86,7 +96,8 @@ char* StringReverse(char *str) {
     return rev;
 }
 
-char* infixToPostfix(char *infix) {
+char* infixToPostfix(char *infix)
+{
     infix = StringReverse(infix);
     int len = strlen(infix);
     char *postfix = (char*)malloc(sizeof(char) * (len + 1));
