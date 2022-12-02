@@ -134,7 +134,7 @@ char* infixToPostfix(char *infix)
         }
     }
 
-    while (s->top != -1) {
+    while (!isEmpty(s)) {
         postfix[j++] = pop(s);
     }
 
